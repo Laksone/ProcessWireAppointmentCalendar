@@ -1,0 +1,166 @@
+$calendar-color-primary: #0d6efd !default;
+$calendar-color-light: #f7f7f7 !default;
+$calendar-color-grey: #dddddd !default;
+$calendar-border-radius: 0.5rem !default;
+// $calendar-box-shadow: 0 0 15px rgba(0,0,0,.1) !default;
+
+.appointment-calendar-title {
+  font-size: 1.2rem;
+  text-align: center;
+  padding: 1.65rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: $calendar-color-grey;
+}
+
+#appointment-calendar {
+  // box-shadow: $calendar-box-shadow;
+  border-radius: $calendar-border-radius;
+  text-align: center;
+  overflow: hidden;
+
+  /* HEADER */
+  .appointment-calendar-header {
+    display: flex;
+    align-items: center;
+    background-color: $calendar-color-primary;
+    color: #fff;
+    padding-block: 0.5rem;
+
+    .appointment-calendar-header-arrow {
+      padding: 1rem;
+      display: block;
+      border: none;
+      margin: 0;
+      background: none;
+
+      &.appointment-calendar-header-arrow-disabled {
+        pointer-events: none;
+        opacity: 0.25;
+      }
+    }
+
+    .appointment-calendar-header-text {
+      flex-grow: 1;
+      text-transform: uppercase;
+    }
+
+    #appointment-calendar-header-month {
+      font-size: 1.5rem;
+      letter-spacing: 0.1em;
+      font-weight: bold;
+    }
+
+    #appointment-calendar-header-year {
+      font-size: 1.25rem;
+    }
+
+  }
+
+  /* WEEKDAYS */
+  .appointment-calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background-color: darken($calendar-color-light, 3%);
+    font-weight: bold;
+    padding-block: 0.5rem;
+  }
+
+  /* DAYS */
+  #appointment-calendar-days {
+    background-color: $calendar-color-light;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    position: relative;
+
+    &:empty {
+      padding-bottom: 70%;
+    }
+
+    > div {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .appointment-calendar-day {
+
+      > input {
+        position: absolute;
+        clip: rect(0, 0, 0, 0);
+        pointer-events: none;
+
+        &:checked + label {
+          background-color: $calendar-color-primary;
+          color: #fff;
+        }
+      }
+    }
+
+    .appointment-calendar-day-label {
+      background-color: #fff;
+      color: $calendar-color-primary;
+      text-decoration: none;
+      width: 2.5rem;
+      height: 2.5rem;
+      line-height: 2.5rem;
+      border-radius: 50%;
+      cursor: pointer;
+
+      @media screen and (max-width: 479px) {
+        width: 2rem;
+        height: 2rem;
+        line-height: 2rem;
+      }
+    }
+
+    .appointment-calendar-day-blocked .appointment-calendar-day-label {
+      color: #ccc;
+      pointer-events: none;
+      background-color: transparent;
+    }
+  }
+
+  &.appointment-calendar-loading #appointment-calendar-days:after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-color: rgba(247, 247, 247, 0.5);
+    background-image: url('data:image/svg+xml;utf8,<svg version="1.1" id="L9" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 0 0" xml:space="preserve"> <path fill="%23999999" d="M73,50c0-12.7-10.3-23-23-23S27,37.3,27,50 M30.9,50c0-10.5,8.5-19.1,19.1-19.1S69.1,39.5,69.1,50"><animateTransform attributeName="transform" attributeType="XML" type="rotate" dur="1s" from="0 50 50" to="360 50 50" repeatCount="indefinite" /></path></svg>');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 160px;
+  }
+}
+
+/* SLOTS */
+#appointment-calendar-slots {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+
+  .appointment-calendar-slot {
+    > input {
+      position: absolute;
+      clip: rect(0, 0, 0, 0);
+      pointer-events: none;
+
+      &:checked + label {
+        background-color: $calendar-color-primary;
+        color: #fff;
+      }
+    }
+  }
+
+  .appointment-calendar-slot-label {
+    background: $calendar-color-light;
+    // box-shadow: $calendar-box-shadow;
+    display: block;
+    padding: 0.5rem;
+    text-align: center;
+    cursor: pointer;
+    border-radius: $calendar-border-radius;
+  }
+}

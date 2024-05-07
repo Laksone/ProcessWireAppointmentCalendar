@@ -1,0 +1,135 @@
+.appointment-calendar-title {
+  font-size: 1.2rem;
+  text-align: center;
+  padding: 1.65rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #dddddd;
+}
+
+#appointment-calendar {
+  border-radius: 0.5rem;
+  text-align: center;
+  overflow: hidden;
+  /* HEADER */
+  /* WEEKDAYS */
+  /* DAYS */
+}
+#appointment-calendar .appointment-calendar-header {
+  display: flex;
+  align-items: center;
+  background-color: #0d6efd;
+  color: #fff;
+  padding-block: 0.5rem;
+}
+#appointment-calendar .appointment-calendar-header .appointment-calendar-header-arrow {
+  padding: 1rem;
+  display: block;
+  border: none;
+  margin: 0;
+  background: none;
+}
+#appointment-calendar .appointment-calendar-header .appointment-calendar-header-arrow.appointment-calendar-header-arrow-disabled {
+  pointer-events: none;
+  opacity: 0.25;
+}
+#appointment-calendar .appointment-calendar-header .appointment-calendar-header-text {
+  flex-grow: 1;
+  text-transform: uppercase;
+}
+#appointment-calendar .appointment-calendar-header #appointment-calendar-header-month {
+  font-size: 1.5rem;
+  letter-spacing: 0.1em;
+  font-weight: bold;
+}
+#appointment-calendar .appointment-calendar-header #appointment-calendar-header-year {
+  font-size: 1.25rem;
+}
+#appointment-calendar .appointment-calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background-color: #efefef;
+  font-weight: bold;
+  padding-block: 0.5rem;
+}
+#appointment-calendar #appointment-calendar-days {
+  background-color: #f7f7f7;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  position: relative;
+}
+#appointment-calendar #appointment-calendar-days:empty {
+  padding-bottom: 70%;
+}
+#appointment-calendar #appointment-calendar-days > div {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#appointment-calendar #appointment-calendar-days .appointment-calendar-day > input {
+  position: absolute;
+  clip: rect(0, 0, 0, 0);
+  pointer-events: none;
+}
+#appointment-calendar #appointment-calendar-days .appointment-calendar-day > input:checked + label {
+  background-color: #0d6efd;
+  color: #fff;
+}
+#appointment-calendar #appointment-calendar-days .appointment-calendar-day-label {
+  background-color: #fff;
+  color: #0d6efd;
+  text-decoration: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  line-height: 2.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+}
+@media screen and (max-width: 479px) {
+  #appointment-calendar #appointment-calendar-days .appointment-calendar-day-label {
+    width: 2rem;
+    height: 2rem;
+    line-height: 2rem;
+  }
+}
+#appointment-calendar #appointment-calendar-days .appointment-calendar-day-blocked .appointment-calendar-day-label {
+  color: #ccc;
+  pointer-events: none;
+  background-color: transparent;
+}
+#appointment-calendar.appointment-calendar-loading #appointment-calendar-days:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-color: rgba(247, 247, 247, 0.5);
+  background-image: url('data:image/svg+xml;utf8,<svg version="1.1" id="L9" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 0 0" xml:space="preserve"> <path fill="%23999999" d="M73,50c0-12.7-10.3-23-23-23S27,37.3,27,50 M30.9,50c0-10.5,8.5-19.1,19.1-19.1S69.1,39.5,69.1,50"><animateTransform attributeName="transform" attributeType="XML" type="rotate" dur="1s" from="0 50 50" to="360 50 50" repeatCount="indefinite" /></path></svg>');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 160px;
+}
+
+/* SLOTS */
+#appointment-calendar-slots {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+#appointment-calendar-slots .appointment-calendar-slot > input {
+  position: absolute;
+  clip: rect(0, 0, 0, 0);
+  pointer-events: none;
+}
+#appointment-calendar-slots .appointment-calendar-slot > input:checked + label {
+  background-color: #0d6efd;
+  color: #fff;
+}
+#appointment-calendar-slots .appointment-calendar-slot-label {
+  background: #f7f7f7;
+  display: block;
+  padding: 0.5rem;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 0.5rem;
+}

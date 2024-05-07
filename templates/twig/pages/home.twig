@@ -1,0 +1,715 @@
+{% extends 'common/page.twig' %}
+
+{% block content %}
+
+    <div class="py-5"></div>
+    <div class="container">
+        <h1>
+            Book an appointment
+        </h1>
+
+        <link rel="stylesheet" href="/site/modules/AppointmentCalendar/styles/AppointmentCalendarFrontend.css">
+
+        <div class="py-3"></div>
+        <div class="p-3 shadow-lg">
+            <form action="" id="appointment-calendar-form">
+
+
+                {# STEP 1 #}
+                <div class="appointment-calendar-step appointment-calendar-step-active">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label for="select-location" class="form-label">Location *</label>
+                            <select class="form-select" id="select-location" name="select-location" required>
+                                <option value="" disabled selected>Please select</option>
+
+                                {% for location in locations %}
+                                    <option value="{{ location.id }}">
+                                        {{ location.title }}
+                                    </option>
+                                {% endfor %}
+
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="select-service" class="form-label">Service *</label>
+                            <select class="form-select" id="select-service" name="select-service" disabled required>
+                                <option id="select-service-placeholder" value="" disabled selected>
+                                    Please select location first
+                                </option>
+                            </select>
+                        </div>
+
+                        {# TODO: ANY SELECT FUNCTIONALLITY #}
+                        <div class="col-md-4">
+                            <label for="select-person" class="form-label">Staff member *</label>
+                            <select class="form-select" id="select-person" name="select-person" required>
+                                <option value="" id="select-person-placeholder">Any</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="py-2"></div>
+                    <hr>
+                    <div class="py-2"></div>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                        </div>
+                        <div class="col-md-6">
+                            <button type="button" class="btn btn-primary btn-lg w-100" data-load="calendar"
+                                    data-goto="next">
+                                Next step
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                {# STEP 2 #}
+                <div class="appointment-calendar-step" style="display: none;">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div id="appointment-calendar">
+                                <div class="appointment-calendar-header">
+                                    <div>
+                                        <button type="button"
+                                                class="appointment-calendar-header-arrow appointment-calendar-header-arrow-disabled"
+                                                data-month="last">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+                                                 fill="#ffffff"
+                                                 viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd"
+                                                      d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="appointment-calendar-header-text">
+                                        <div id="appointment-calendar-header-month">
+                                            January
+                                        </div>
+                                        <div id="appointment-calendar-header-year">
+                                            2023
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <button type="button" class="appointment-calendar-header-arrow"
+                                                data-month="next">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+                                                 fill="#ffffff"
+                                                 viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd"
+                                                      d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="appointment-calendar-weekdays">
+                                    <div>Mo</div>
+                                    <div>Tu</div>
+                                    <div>We</div>
+                                    <div>Th</div>
+                                    <div>Fr</div>
+                                    <div>Sa</div>
+                                    <div>Su</div>
+                                </div>
+                                <div id="appointment-calendar-days"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="appointment-calendar-title">
+                                Please select a date and time
+                            </div>
+                            <div id="appointment-calendar-slots"></div>
+                        </div>
+                    </div>
+
+                    <div style="display:none!important;">
+                        <label for="select-year" class="form-label">Year *</label>
+                        <select class="form-select" id="select-year" name="select-year" required>
+                            <option value="2024" selected>2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                        </select>
+
+                        <label for="select-month" class="form-label">Month *</label>
+                        <select class="form-select" id="select-month" name="select-month" required>
+                            <option value="01" selected>Januar</option>
+                            <option value="02">Februar</option>
+                            <option value="03">März</option>
+                            <option value="04">April</option>
+                            <option value="05">Mai</option>
+                            <option value="06">Juni</option>
+                            <option value="07">Juli</option>
+                            <option value="08">August</option>
+                            <option value="09">September</option>
+                            <option value="10">Oktober</option>
+                            <option value="11">November</option>
+                            <option value="12">Dezember</option>
+                        </select>
+                    </div>
+
+                    <div class="py-2"></div>
+                    <hr>
+                    <div class="py-2"></div>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <button type="button" class="btn btn-outline-primary btn-lg w-100" data-goto="prev">
+                                Previous step
+                            </button>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="button" class="btn btn-primary btn-lg w-100" data-goto="next">
+                                Next step
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                {# STEP 3 #}
+                <div class="appointment-calendar-step" style="display: none;">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="input-name-first" class="form-label">First name *</label>
+                            <input class="form-control" type="text" id="input-name-first" name="input-name-first"
+                                   maxlength="50"
+                                   placeholder="Please enter" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="input-name-last" class="form-label">Last name *</label>
+                            <input class="form-control" type="text" id="input-name-last" name="input-name-last"
+                                   maxlength="50"
+                                   placeholder="Please enter" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="input-phone" class="form-label">Phone number</label>
+                            <input class="form-control" type="text" id="input-phone" name="input-phone" maxlength="50"
+                                   placeholder="Please enter">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="input-email" class="form-label">Email *</label>
+                            <input class="form-control" type="email" id="input-email" name="input-email" maxlength="50"
+                                   placeholder="Please enter" required>
+                        </div>
+
+                        <div class="col-md-12" style="display: none;">
+                            <label for="input-honeypot" class="form-label">Honeypot</label>
+                            <input class="form-control" type="text" id="input-honeypot" name="input-honeypot"
+                                   maxlength="50"
+                                   placeholder="Please enter">
+                        </div>
+                    </div>
+
+                    <div class="py-2"></div>
+                    <hr>
+                    <div class="py-2"></div>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <button type="button" class="btn btn-outline-primary btn-lg w-100" data-goto="prev">
+                                Previous step
+                            </button>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-primary btn-lg w-100" id="appointment-calendar-btn-submit">
+                                Send form
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <div class="py-4"></div>
+
+    </div>
+    <div class="py-5"></div>
+
+    {# ERROR TOAST #}
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="appointment-calendar-error" class="toast align-items-center text-bg-danger border-0" role="alert"
+             aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
+            <div class="d-flex">
+                <div class="toast-body">
+                    Check your entries.
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+
+{% block footerScripts %}
+
+    {# TODO: LOCAL #}
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+
+    <script>
+
+        $(function () {
+
+            {# ################################### #}
+            {# AJAX START #}
+            {# ################################### #}
+
+            {# LOAD EVENT DATES #}
+            let ajaxLoadWizard = function (ajaxUrl) {
+                this.ajaxUrl = ajaxUrl;
+                this.selectors = {
+                    form: '#appointment-calendar-form',
+                    selectService: '#select-service',
+                    selectServicePlaceholder: '#select-service-placeholder',
+                    selectLocation: '#select-location',
+                    selectPerson: '#select-person',
+                    selectPersonPlaceholder: '#select-person-placeholder',
+                    selectYear: '#select-year',
+                    selectMonth: '#select-month',
+                    selectDate: '[name="select-date"]',
+                    selectTime: '[name="select-slot"]',
+                    inputNameFirst: '#input-name-first',
+                    inputNameLast: '#input-name-last',
+                    inputPhone: '#input-phone',
+                    inputEmail: '#input-email',
+                    inputHoneypot: '#input-honeypot',
+                    calendar: '#appointment-calendar',
+                    calendarDays: '#appointment-calendar-days',
+                    calendarHeaderMonth: '#appointment-calendar-header-month',
+                    calendarHeaderYear: '#appointment-calendar-header-year',
+                    calendarSlots: '#appointment-calendar-slots',
+                    stepPrevBtn: '[data-goto="prev"]',
+                    stepNextBtn: '[data-goto="next"]',
+                    step: '.appointment-calendar-step',
+                    stepActive: '.appointment-calendar-step-active',
+                    btnSubmit: '#appointment-calendar-btn-submit',
+                };
+                this.months = this.extractOptionsValues(this.selectors.selectMonth);
+                this.years = this.extractOptionsValues(this.selectors.selectYear);
+
+                /* TOAST */
+                this.toastError = document.getElementById('appointment-calendar-error');
+                this.toast = new bootstrap.Toast(this.toastError);
+
+                this.init();
+            };
+            ajaxLoadWizard.prototype = {
+                ajaxUrl: null,
+
+                init: function () {
+                    let $this = this;
+
+                    $(this.selectors.stepPrevBtn).on('click', function () {
+                        $this.goToPrevStep();
+                    });
+
+                    $(this.selectors.stepNextBtn).on('click', function () {
+                        $this.goToNextStep();
+                    });
+
+                    $('[data-load="calendar"]').on('click', function () {
+                        $this.loadDates();
+                    });
+
+
+                    /* VALIDATE FORM STEPS */
+
+                    $(this.selectors.form).validate({
+                        ignore: ":not(:visible)",
+                        errorClass: 'is-invalid',
+                        errorElement: "div",
+                        errorPlacement: function (error, element) {
+                            // error.insertAfter("#appointment-calendar-error");
+                        },
+                    });
+                },
+                goToPrevStep() {
+                    let currentStep = $(this.selectors.form).find(this.selectors.stepActive);
+                    let prevStep = currentStep.prevAll(this.selectors.step).first();
+
+                    if (prevStep.length > 0) {
+                        currentStep.removeClass('appointment-calendar-step-active').slideUp();
+                        prevStep.addClass('appointment-calendar-step-active').slideDown();
+                    }
+                },
+                goToNextStep() {
+                    if ($(this.selectors.form).valid() === true) {
+                        let currentStep = $(this.selectors.form).find(this.selectors.stepActive);
+                        let nextStep = currentStep.nextAll(this.selectors.step).first();
+
+                        if (nextStep.length > 0) {
+                            currentStep.removeClass('appointment-calendar-step-active').slideUp();
+                            nextStep.addClass('appointment-calendar-step-active').slideDown();
+                        }
+                    } else {
+                        this.toast.show()
+                    }
+                },
+                extractOptionsValues(selector) {
+                    return $(selector).find('option').map(function () {
+                        return $(this).val();
+                    }).get();
+                },
+
+                disableFormItem: function (selector) {
+                    $(selector).val($(selector).find('option:first').val());
+                    $(selector).attr('disabled', true);
+                    $(selector).find('option').not(':first').remove();
+                },
+                enableFormItem: function (selector, placeholder, text) {
+                    $(selector).attr('disabled', false);
+                    $(placeholder).text(text);
+                },
+                showLoadingPlaceholderText: function (selector) {
+                    $(selector).text('Loading...');
+                },
+
+                loadServices: function () {
+                    let $this = this;
+
+                    this.disableFormItem(this.selectors.selectService);
+                    this.disableFormItem(this.selectors.selectPerson);
+
+                    let ajaxData = {
+                        action: 'load_services',
+                        selectedLocation: $(this.selectors.selectLocation).val(),
+                    }
+
+                    $.ajax({
+                        type: "GET",
+                        data: ajaxData,
+                        dataType: 'json',
+                        url: this.ajaxUrl,
+                        beforeSend: function () {
+                            // SHOW LOADER
+                            $this.showLoadingPlaceholderText($($this.selectors.selectServicePlaceholder));
+                            $this.showLoadingPlaceholderText($($this.selectors.selectPersonPlaceholder));
+                        },
+                        complete: function () {
+                            // HIDE LOADER
+                            // $($this.selectors.selectServicePlaceholder).text('Please select...');
+                        },
+                        success: function (response) {
+                            console.log('SUCCESS:' + JSON.stringify(response));
+                        },
+                        error: function (response) {
+                            console.log('ERROR:' + JSON.stringify(response));
+                            $($this.selectors.selectService).attr('disabled', true);
+                        }
+                    }).done(function (response) {
+                        if (!!response.success) {
+                            $this.enableFormItem($this.selectors.selectService, $this.selectors.selectServicePlaceholder, 'Please select');
+                            $this.enableFormItem($this.selectors.selectPerson, $this.selectors.selectPersonPlaceholder, 'Any');
+
+                            let html = '';
+
+                            $.each(response.data, function (index) {
+                                html += '<option value="' + response.data[index].id + '">';
+                                html += response.data[index].name;
+
+                                // if (response.data[index].timeStart) {
+                                // 	html += ' - ' + response.data[index].timeStart + ' Uhr';
+                                // }
+
+                                html += '</option>';
+                            });
+
+                            $($this.selectors.selectService).append(html);
+                        } else {
+                            $($this.selectors.selectService).attr('disabled', true);
+                        }
+                    });
+                },
+                loadPersons: function () {
+                    let $this = this;
+
+                    $(this.selectors.selectPerson).val($(this.selectors.selectPerson).find('option:first').val());
+                    $(this.selectors.selectPerson).attr('disabled', true);
+                    $(this.selectors.selectPerson).find('option').not(':first').remove();
+
+                    let ajaxData = {
+                        action: 'load_persons',
+                        selectedLocation: $(this.selectors.selectLocation).val(),
+                        selectedService: $(this.selectors.selectService).val(),
+                    }
+
+                    $.ajax({
+                        type: "GET",
+                        data: ajaxData,
+                        dataType: 'json',
+                        url: this.ajaxUrl,
+                        beforeSend: function () {
+                            // SHOW LOADER
+                            $this.showLoadingPlaceholderText($($this.selectors.selectPersonPlaceholder));
+                        },
+                        complete: function () {
+                            // HIDE LOADER
+                            // $($this.selectors.selectPersonPlaceholder).text('Any');
+                        },
+                        success: function (response) {
+                            console.log('SUCCESS:' + JSON.stringify(response));
+                        },
+                        error: function (response) {
+                            console.log('ERROR:' + JSON.stringify(response));
+                            $($this.selectors.selectPerson).attr('disabled', true);
+                        }
+                    }).done(function (response) {
+                        if (!!response.success) {
+                            $($this.selectors.selectPerson).attr('disabled', false);
+                            $($this.selectors.selectPersonPlaceholder).text('Any');
+
+                            let html = '';
+
+                            $.each(response.data, function (index) {
+                                html += '<option value="' + response.data[index].id + '">';
+                                html += response.data[index].name;
+                                html += '</option>';
+                            });
+
+                            $($this.selectors.selectPerson).append(html);
+                        } else {
+                            $($this.selectors.selectPerson).attr('disabled', true);
+                        }
+                    });
+                },
+
+                loadDates: function () {
+                    let $this = this;
+
+                    // $(this.selectors.selectDate).find('option').not(':first').remove();
+
+                    let ajaxData = {
+                        action: 'load_dates',
+                        selectedPerson: $(this.selectors.selectPerson).val(),
+                        selectedYear: $(this.selectors.selectYear).val(),
+                        selectedMonth: $(this.selectors.selectMonth).val(),
+                        selectedService: $(this.selectors.selectService).val(),
+                    }
+
+                    $.ajax({
+                        type: "GET",
+                        data: ajaxData,
+                        dataType: 'json',
+                        url: this.ajaxUrl,
+                        beforeSend: function () {
+                            $($this.selectors.calendar).addClass('appointment-calendar-loading');
+                            $($this.selectors.calendarSlots).html('');
+                        },
+                        complete: function () {
+                            $($this.selectors.calendar).removeClass('appointment-calendar-loading');
+                        },
+                        success: function (response) {
+                            console.log('SUCCESS:' + JSON.stringify(response));
+                        },
+                        error: function (response) {
+                            console.log('ERROR:' + JSON.stringify(response));
+                        }
+                    }).done(function (response) {
+                        if (!!response.success) {
+
+                            let html = '';
+                            $.each(response.data, function (index) {
+                                if (response.data[index].status === 'blocked') {
+                                    html += '<div class="appointment-calendar-day appointment-calendar-day-blocked">';
+                                    html += '<div class="appointment-calendar-day-label">' + (index + 1) + '</div>';
+                                    html += '</div>';
+                                } else {
+                                    html += '<div class="appointment-calendar-day day-free">';
+                                    html += '<input type="radio" name="select-date" id="select-date_' + index + '" value="' + response.data[index].date + '" required>';
+                                    html += '<label class="appointment-calendar-day-label" for="select-date_' + index + '">' + (index + 1) + '</label>';
+                                    html += '</div>';
+                                }
+                            });
+                            $($this.selectors.calendarDays).html(html);
+                        }
+                    });
+                },
+                updateCalendarHeader() {
+                    let selectedMonthText = $(this.selectors.selectMonth + ' option:selected').text();
+                    $(this.selectors.calendarHeaderMonth).text(selectedMonthText);
+
+                    let selectedYearText = $(this.selectors.selectYear + ' option:selected').text();
+                    $(this.selectors.calendarHeaderYear).text(selectedYearText);
+                },
+                changeMonth(direction) {
+
+                    let currentMonthIndex = this.months.indexOf($(this.selectors.selectMonth).val());
+                    let currentYear = parseInt($(this.selectors.selectYear).val());
+
+                    if (direction === "next") {
+                        currentMonthIndex++;
+                        if (currentMonthIndex >= this.months.length) {
+                            currentMonthIndex = 0;
+                            currentYear++;
+                        }
+                    } else if (direction === "last") {
+                        currentMonthIndex--;
+                        if (currentMonthIndex < 0) {
+                            currentMonthIndex = this.months.length - 1;
+                            currentYear--;
+                        }
+                    }
+
+                    // CHECK IF LAST OR FIRST ITEM AND DISABLE ARROW
+                    let lastMonthIndex = this.months.length - 1;
+                    let firstMonthIndex = 0;
+
+                    if ((currentYear === parseInt(this.years[0]) && currentMonthIndex === firstMonthIndex)) {
+                        $('[data-month="last"]').addClass('appointment-calendar-header-arrow-disabled');
+                    } else {
+                        $('[data-month="last"]').removeClass('appointment-calendar-header-arrow-disabled');
+                    }
+
+                    if ((currentYear === parseInt(this.years[this.years.length - 1]) && currentMonthIndex === lastMonthIndex)) {
+                        $('[data-month="next"]').addClass('appointment-calendar-header-arrow-disabled');
+                    } else {
+                        $('[data-month="next"]').removeClass('appointment-calendar-header-arrow-disabled');
+                    }
+
+                    // CHANGE HIDDEN SELECT VALUES
+                    $(this.selectors.selectMonth).val(this.months[currentMonthIndex]);
+                    $(this.selectors.selectYear).val(currentYear);
+
+                    this.updateCalendarHeader();
+                    this.loadDates();
+                },
+
+                loadTimeslots: function () {
+                    let $this = this;
+
+                    let ajaxData = {
+                        action: 'load_timeslots',
+                        selectedDate: $(this.selectors.selectDate + ':checked').val(),
+                        selectedPerson: $(this.selectors.selectPerson).val(),
+                    }
+
+                    $.ajax({
+                        type: "GET",
+                        data: ajaxData,
+                        dataType: 'json',
+                        url: this.ajaxUrl,
+                        beforeSend: function () {
+                            $($this.selectors.calendarSlots).html('');
+                            $($this.selectors.calendarSlots).after('<div id="appointment-calendar-slots-spinner" class="text-center"><div class="mx-auto my-3 spinner-border text-secondary opacity-50" role="status"><span class="visually-hidden">Loading...</span></div></div>');
+                        },
+                        complete: function () {
+                            $('#appointment-calendar-slots-spinner').hide();
+                        },
+                        success: function (response) {
+                            console.log('SUCCESS:' + JSON.stringify(response));
+                        },
+                        error: function (response) {
+                            console.log('ERROR:' + JSON.stringify(response));
+                        }
+                    }).done(function (response) {
+                        if (!!response.success) {
+
+                            let html = '';
+
+                            $.each(response.data, function (index) {
+                                html += '<div class="appointment-calendar-slot">';
+                                html += '<input value="' + response.data[index]['start'] + '" type="radio" name="select-slot" id="select-slot_' + index + '" required>';
+                                html += '<label class="appointment-calendar-slot-label" for="select-slot_' + index + '">';
+                                html += response.data[index]['start'];
+                                html += '</label>';
+                                html += '</div>';
+
+                            });
+                            $($this.selectors.calendarSlots).html(html);
+                        }
+                    });
+                },
+                sendForm: function () {
+                    let $this = this;
+
+                    if ($(this.selectors.form).valid() !== true) {
+                        this.toast.show()
+                        return;
+                    }
+
+                    let ajaxData = {
+                        action: 'send_form',
+                        selectedLocation: $(this.selectors.selectLocation).val(),
+                        selectedService: $(this.selectors.selectService).val(),
+                        selectedPerson: $(this.selectors.selectPerson).val(),
+                        selectedDate: $(this.selectors.selectDate + ':checked').val(),
+                        selectedTime: $(this.selectors.selectTime + ':checked').val(),
+                        inputNameFirst: $(this.selectors.inputNameFirst).val(),
+                        inputNameLast: $(this.selectors.inputNameLast).val(),
+                        inputPhone: $(this.selectors.inputPhone).val(),
+                        inputEmail: $(this.selectors.inputEmail).val(),
+                        inputHoneypot: $(this.selectors.inputHoneypot).val(),
+                    }
+
+                    $.ajax({
+                        type: "GET",
+                        data: ajaxData,
+                        dataType: 'json',
+                        url: this.ajaxUrl,
+                        beforeSend: function () {
+                            $($this.selectors.btnSubmit).addClass('disabled');
+                            $($this.selectors.btnSubmit).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
+                        },
+                        complete: function () {
+                            $($this.selectors.btnSubmit).removeClass('disabled');
+                            $($this.selectors.btnSubmit).html('Send form');
+                        },
+                        success: function (response) {
+                            console.log('SUCCESS:' + JSON.stringify(response));
+                        },
+                        error: function (response) {
+                            console.log('ERROR:' + JSON.stringify(response));
+                        }
+                    }).done(function (response) {
+                        if (!!response.success) {
+                            /* SUCCESS ALERT */
+                            let html = '<div class="alert alert-success text-center" role="alert">';
+                            html += '<div class="fs-3">Thanks for your booking.</div>';
+                            html += '</div>';
+                            $($this.selectors.form).html(html);
+                        } else {
+                            /* ERROR ALERT */
+                            let html = '<div class="alert alert-danger text-center" role="alert">';
+                            html += '<div class="fs-3">Error! Please contact the site administrator.</div>';
+                            html += '</div>';
+                            $($this.selectors.form).html(html);
+                        }
+                    });
+                }
+            };
+
+            let wizard = new ajaxLoadWizard('/ajax/');
+
+            $('#select-location').on('change', function () {
+                wizard.loadServices();
+            });
+
+            $('#select-service').on('change', function () {
+                wizard.loadPersons();
+            });
+
+            $(".appointment-calendar-header-arrow").on("click", function () {
+                let direction = $(this).data("month");
+                wizard.changeMonth(direction);
+            });
+
+            $(document).on('click', '[name="select-date"]', function () {
+                wizard.loadTimeslots();
+            });
+
+            $('#appointment-calendar-form').on('submit', function (event) {
+                event.preventDefault();
+                wizard.sendForm();
+            });
+
+            {# ################################### #}
+            {# AJAX END #}
+            {# ################################### #}
+
+        });
+    </script>
+{% endblock footerScripts %}
+
+

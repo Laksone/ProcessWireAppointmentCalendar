@@ -1,0 +1,134 @@
+$calendar-color-primary: #e91c60 !default;
+$calendar-color-light: #e5e5e5 !default;
+$calendar-color-border: #e5e5e5 !default;
+$calendar-box-shadow: 0 0 15px rgba(0, 0, 0, .1) !default;
+$calendar-border-radius: 0 !default;
+$calendar-border-radius-sm: 0.25rem !default;
+
+/* COMMON START */
+
+.appointment-calendar-d-flex {
+  display: flex;
+}
+
+.appointment-calendar-row {
+  display: flex;
+  margin-left: -1rem;
+  margin-right: -1rem;
+}
+
+.appointment-calendar-col {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  flex: 1 0 0;
+}
+
+.appointment-calendar-text-center {
+  text-align: center;
+}
+
+.appointment-calendar-position-relative {
+  position: relative;
+}
+
+.appointment-calendar-btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+}
+
+.appointment-calendar-btn-sm {
+  padding: 0.25rem 0.5rem;
+}
+
+.appointment-calendar-btn-primary {
+  color: #fff;
+  background-color: $calendar-color-primary;
+  border-radius: $calendar-border-radius-sm;
+
+  &:hover, &:focus, &:active {
+    color: #fff;
+    text-decoration: none;
+    background-color: darken($calendar-color-primary, 10%);
+  }
+}
+
+.appointment-calendar-link-stretched:after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+
+/* COMMON END */
+
+
+/* DATE BOX */
+.appointment-calendar-datebox {
+  display: flex;
+  flex-direction: column;
+  width: 4rem;
+  text-transform: uppercase;
+  border-radius: $calendar-border-radius-sm;
+  overflow: hidden;
+  text-align: center;
+  background-color: $calendar-color-light;
+  margin-right: 1rem;
+
+  .appointment-calendar-datebox-day {
+    font-size: 2rem;
+    font-weight: bold;
+    line-height: 1.25;
+    padding: 0.25rem;
+    background-color: $calendar-color-primary;
+    color: #fff;
+  }
+
+  .appointment-calendar-datebox-month {
+    padding-top: 0.25rem;
+    font-weight: bold;
+    line-height: 1;
+  }
+
+  .appointment-calendar-datebox-year {
+    padding-bottom: 0.25rem;
+  }
+}
+
+/* DATE BOX END */
+
+/* CARD START */
+.appointment-calendar-card {
+  padding: 1.5rem;
+  background: #fff;
+  border: solid 1px $calendar-color-border;
+  border-radius: $calendar-border-radius;
+  box-shadow: $calendar-box-shadow;
+
+  & + .appointment-calendar-card {
+    margin-top: 1rem;
+  }
+}
+
+.appointment-calendar-card-title {
+  font-size: 1.5rem;
+}
+
+.appointment-calendar-card-text {
+  margin: 1rem 0 1.5rem 0;
+}
+
+.appointment-calendar-card-icon {
+  width: 4rem;
+  height: 4rem;
+  margin: 0 auto 1rem auto;
+  font-size: 2rem;
+  border-radius: 50%;
+  background-color: lighten($calendar-color-primary, 45%);
+  color: $calendar-color-primary;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* CARD END */
+
